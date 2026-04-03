@@ -63,56 +63,65 @@ class TicTacToe:
         print("Welcome to Tic-tac-toe!")
         time.sleep(0.5)
         
-        turn_input = input("Enter 1 for the first move and 2 for the second move:")
-        while turn_input not in ["1", "2"]:
-            print("Please enter 1 or 2.")
-            turn_input = input("> ")
-        turn = int(turn_input)
-            
-        if turn == 1:
-            print("You are the first player.")
-            my_mark = self.crosses
-            enemy_mark = self.noughts
-        else:
-            print("You are the Second player.")
-            my_mark = self.noughts
-            enemy_mark = self.crosses
-
-        print("1|2|3")
-        print("4|5|6")
-        print("7|8|9")
-        print("Enter the location and the corresponding number.")
-        time.sleep(1.0)
-        print("----------------")
-        self.display_board()
-
-        current_step = 1
         while True:
-            time.sleep(0.5)
+            self.board = ["-"] * 9
             
-            is_my_turn = (current_step % 2 == 1 and turn == 1) or (current_step % 2 == 0 and turn == 2)
-
-            if current_step % 2 == 1:
-                print("TURN:" + str((current_step + 1) // 2))
-
-            if is_my_turn:
-                self.my_turn(my_mark)
-                if self.check_winner(my_mark):
-                    time.sleep(0.5)
-                    print(f"{my_mark} WIN")
-                    break
-            else:
-                self.enemy_turn(enemy_mark)
-                if self.check_winner(enemy_mark):
-                    time.sleep(0.5)
-                    print(f"{enemy_mark} WIN")
-                    break
-            
-            if self.is_draw():
-                print("DRAW")
-                break
+            turn_input = input("Enter 1 for the first move and 2 for the second move:")
+            while turn_input not in ["1", "2"]:
+                print("Please enter 1 or 2.")
+                turn_input = input("> ")
+            turn = int(turn_input)
                 
-            current_step += 1
+            if turn == 1:
+                print("You are the first player.")
+                my_mark = self.crosses
+                enemy_mark = self.noughts
+            else:
+                print("You are the Second player.")
+                my_mark = self.noughts
+                enemy_mark = self.crosses
+
+            print("1|2|3")
+            print("4|5|6")
+            print("7|8|9")
+            print("Enter the location and the corresponding number.")
+            time.sleep(1.0)
+            print("----------------")
+            self.display_board()
+
+            current_step = 1
+            while True:
+                time.sleep(0.5)
+                
+                is_my_turn = (current_step % 2 == 1 and turn == 1) or (current_step % 2 == 0 and turn == 2)
+
+                if current_step % 2 == 1:
+                    print("TURN:" + str((current_step + 1) // 2))
+
+                if is_my_turn:
+                    self.my_turn(my_mark)
+                    if self.check_winner(my_mark):
+                        time.sleep(0.5)
+                        print(f"{my_mark} WIN")
+                        break
+                else:
+                    self.enemy_turn(enemy_mark)
+                    if self.check_winner(enemy_mark):
+                        time.sleep(0.5)
+                        print(f"{enemy_mark} WIN")
+                        break
+                
+                if self.is_draw():
+                    print("DRAW")
+                    break
+                    
+                current_step += 1
+            
+            print("Play again? (y/n)")
+            retry = input("> ").lower()
+            if retry != 'y':
+                print("Thanks for playing!")
+                break
 
 if __name__ == "__main__":
     game = TicTacToe()
