@@ -2,10 +2,12 @@ import random
 import time
 
 class TicTacToe:
+    EMPTY = "-"
+    CROSS = "x"
+    NOUGHT = "○"
+
     def __init__(self):
-        self.board = ["-"] * 9
-        self.crosses = "x"
-        self.noughts = "○"
+        self.board = [self.EMPTY] * 9
         self.win_combinations = [
             (0, 1, 2), (3, 4, 5), (6, 7, 8),  # Horizontal
             (0, 3, 6), (1, 4, 7), (2, 5, 8),  # Vertical
@@ -13,29 +15,26 @@ class TicTacToe:
         ]
 
     def display_board(self):
-        print(f"{self.board[0]} {self.board[1]} {self.board[2]}")
-        print(f"{self.board[3]} {self.board[4]} {self.board[5]}")
-        print(f"{self.board[6]} {self.board[7]} {self.board[8]}")
+        for i in range(0, 9, 3):
+            print(f"{self.board[i]} {self.board[i+1]} {self.board[i+2]}")
 
     def get_available_moves(self):
-        return [i for i, val in enumerate(self.board) if val == "-"]
+        return [i for i, val in enumerate(self.board) if val == self.EMPTY]
 
     def my_turn(self, player_mark):
         time.sleep(0.5)
         print("Your turn.")
         time.sleep(0.2)
         print("Please enter the place to put it from 1-9.")
-        user_input = input("> ")
         while True:
-            if not user_input.isdigit() or int(user_input) < 1 or int(user_input) > 9:
+            user_input = input("> ")
+            if not user_input.isdigit() or not (1 <= int(user_input) <= 9):
                 print("Please enter only numbers from 1 to 9.")
-                user_input = input("> ")
                 continue
             
             move = int(user_input) - 1
-            if move not in self.get_available_moves():
+            if self.board[move] != self.EMPTY:
                 print("Already entered place.")
-                user_input = input("> ")
                 continue
             
             self.board[move] = player_mark
@@ -57,14 +56,14 @@ class TicTacToe:
         return False
 
     def is_draw(self):
-        return "-" not in self.board
+        return self.EMPTY not in self.board
 
     def play(self):
         print("Welcome to Tic-tac-toe!")
         time.sleep(0.5)
         
         while True:
-            self.board = ["-"] * 9
+            self.board = [self.EMPTY] * 9
             
             turn_input = input("Enter 1 for the first move and 2 for the second move:")
             while turn_input not in ["1", "2"]:
@@ -74,12 +73,14 @@ class TicTacToe:
                 
             if turn == 1:
                 print("You are the first player.")
-                my_mark = self.crosses
-                enemy_mark = self.noughts
+                my_mark = self.CROSS
+                enemy_mark = self.NOUGHT
+                is_my_turn = True
             else:
                 print("You are the Second player.")
-                my_mark = self.noughts
-                enemy_mark = self.crosses
+                my_mark = self.NOUGHT
+                enemy_mark = self.CROSS
+                is_my_turn = False
 
             print("1|2|3")
             print("4|5|6")
@@ -92,8 +93,6 @@ class TicTacToe:
             current_step = 1
             while True:
                 time.sleep(0.5)
-                
-                is_my_turn = (current_step % 2 == 1 and turn == 1) or (current_step % 2 == 0 and turn == 2)
 
                 if current_step % 2 == 1:
                     print("TURN:" + str((current_step + 1) // 2))
@@ -115,6 +114,7 @@ class TicTacToe:
                     print("DRAW")
                     break
                     
+                is_my_turn = not is_my_turn
                 current_step += 1
             
             print("Play again? (y/n)")
