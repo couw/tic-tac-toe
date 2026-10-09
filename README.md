@@ -20,7 +20,7 @@ A classic Tic-Tac-Toe game implemented in Python, playable in the command-line i
 
 1.  Clone the repository:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/couw/tic-tac-toe.git
     cd tic-tac-toe
     ```
 
@@ -30,6 +30,14 @@ Run the game from the terminal:
 
 ```bash
 python app.py
+```
+
+### Running Tests
+
+To run the automated tests, execute the following command in the terminal:
+
+```bash
+python -m unittest test_app.py
 ```
 
 ## How to Play
@@ -45,6 +53,7 @@ python app.py
 4.  Enter the number corresponding to the position where you want to place your mark.
 5.  The game will alternate turns between you and the AI.
 6.  The game ends when a player achieves three marks in a row (horizontally, vertically, or diagonally) or when the board is full (a draw).
+7.  After the game ends, you will be prompted to play again. Enter `y` to start a new game or any other key to exit.
 
 ## Code Structure
 
@@ -58,7 +67,3 @@ The application is built around a `TicTacToe` class that encapsulates all the ga
 -   `check_winner(self, mark)`: Checks if the given mark has won the game.
 -   `is_draw(self)`: Checks if the game is a draw.
 -   `play(self)`: The main game loop that orchestrates the game flow.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
